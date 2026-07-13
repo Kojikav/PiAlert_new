@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zona Bahaya Radius 3km",
+        "level": "Merah - Bahaya Tinggi",
+        "description": "Area terlarang saat status Awas"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.4281, -7.5401],
+          [110.4521, -7.5421],
+          [110.4612, -7.5589],
+          [110.4598, -7.5798],
+          [110.4421, -7.5912],
+          [110.4187, -7.5843],
+          [110.4098, -7.5632],
+          [110.4123, -7.5456],
+          [110.4281, -7.5401]
+        ]]
+      }
+    }
+  ]
+}

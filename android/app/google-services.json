@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936862822711",
+    "project_id": "kerimzon-b57bc",
+    "storage_bucket": "kerimzon-b57bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936862822711:android:dd9e85c83eedb157a76ab2",
+        "android_client_info": {
+          "package_name": "com.pialert.pialert"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzht3CESdx8qOOSZMqHDH1IPxECwn6vco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

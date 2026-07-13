@@ -1,0 +1,35 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jalur Evakuasi Utama - Kaliurang",
+        "route": "Dari Dusun Kaliadem menuju Kaliurang via Jalan Raya"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.4458, -7.5754],
+          [110.4421, -7.5932],
+          [110.4352, -7.6012]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jalur Evakuasi Alternatif - Pakem",
+        "route": "Dari Dusun Kepuharjo menuju Pakem"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.4352, -7.5832],
+          [110.4289, -7.5921],
+          [110.4198, -7.6043]
+        ]
+      }
+    }
+  ]
+}

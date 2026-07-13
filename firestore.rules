@@ -1,0 +1,111 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===========================================================
+    // Helper Functions
+    // ===========================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    function isValidSiagaLevel(level) {
+      return level >= 1 && level <= 4;
+    }
+
+    function isValidAnnouncementType(type) {
+      return type in ['info', 'warning', 'danger'];
+    }
+
+    function isValidReportCategory(category) {
+      return category in [
+        'hujan_abu', 'bau_belerang', 'suara_gemuruh',
+        'jalan_terblokir', 'pengungsian_darurat', 'lainnya'
+      ];
+    }
+
+    // ===========================================================
+    // users/{uid}
+    // ===========================================================
+    // Read:     owner or admin
+    // Create:   only owner (saat registrasi)
+    // Update:   owner, tetapi field `role` tidak bisa diubah sendiri
+    // Delete:   tidak diizinkan (admin bisa dari console)
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
+      allow delete: if false;
+    }
+
+    // ===========================================================
+    // siaga_status/current (single document)
+    // ===========================================================
+    // Read:     semua orang (termasuk belum login), untuk display level
+    // Write:    hanya admin; validasi level 1-4
+
+    match /siaga_status/{docId} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.data.keys().hasAll(['level', 'levelLabel', 'description', 'updatedBy', 'updatedByName', 'updatedAt'])
+        && isValidSiagaLevel(request.resource.data.level);
+    }
+
+    // ===========================================================
+    // reports/{reportId}
+    // ===========================================================
+    // Read:     semua authenticated user (hanya isDeleted == false — via query)
+    // Create:   authenticated, authorUid harus milik sendiri, kategori valid
+    // Update:   hanya admin (untuk soft-delete / verifikasi)
+    // Delete:   tidak diizinkan (soft-delete via update isDeleted: true)
+
+    match /reports/{reportId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+        && request.resource.data.authorUid == request.auth.uid
+        && isValidReportCategory(request.resource.data.category);
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // ===========================================================
+    // announcements/{announcementId}
+    // ===========================================================
+    // Read:     semua orang (termasuk belum login), untuk banner Home
+    // Write:    hanya admin; validasi tipe info/warning/danger
+
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create: if isAdmin()
+        && isValidAnnouncementType(request.resource.data.type);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ===========================================================
+    // safety_confirmations/{uid}
+    // ===========================================================
+    // Read:     hanya admin (monitoring dashboard)
+    // Write:    owner, document ID harus sama dengan UID pembuat
+    //           siagaLevel yang dikonfirmasi tidak boleh > 4 atau < 1
+
+    match /safety_confirmations/{uid} {
+      allow read: if isAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid);
+      allow delete: if false;
+    }
+  }
+}

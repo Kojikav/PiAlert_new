@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Titik Kumpul Dusun Kaliadem",
+        "capacity": 200,
+        "facilities": "Tenda darurat, air bersih, toilet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [110.4458, -7.5754]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Titik Kumpul Dusun Kepuharjo",
+        "capacity": 150,
+        "facilities": "Lapangan terbuka, posko kesehatan"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [110.4352, -7.5832]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Titik Kumpul Balai Desa Cangkringan",
+        "capacity": 300,
+        "facilities": "Gedung balai, dapur umum, MCK"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [110.4421, -7.6012]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Titik Kumpul Balai Desa Glagaharjo",
+        "capacity": 250,
+        "facilities": "Barak pengungsian permanen, logistik, posko medis"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [110.4532, -7.5921]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Titik Kumpul Dusun Petung",
+        "capacity": 100,
+        "facilities": "Pendopo dusun, air bersih"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [110.4402, -7.5891]
+      }
+    }
+  ]
+}

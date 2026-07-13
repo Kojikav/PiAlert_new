@@ -1,0 +1,62 @@
+name: pialert
+description: "PiAlert — Sistem Informasi Siaga Merapi Berbasis Komunitas"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # Firebase
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.5.1
+  cloud_firestore: ^5.6.5
+  firebase_storage: ^12.4.4
+  firebase_messaging: ^15.2.4
+
+  # Peta & Geolokasi
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  geolocator: ^13.0.2
+
+  # Image Picker
+  image_picker: ^1.1.2
+
+  # State Management
+  provider: ^6.1.2
+
+  # Utilitas
+  intl: ^0.20.2
+  cached_network_image: ^3.4.1
+  uuid: ^4.5.1
+  connectivity_plus: ^6.1.2
+  permission_handler: ^11.3.1
+  flutter_local_notifications: ^18.0.1
+  url_launcher: ^6.2.4
+  http: ^1.2.1
+  cloudinary_public: ^0.23.0
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_logo.jpg"
+  remove_alpha_ios: true
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/geojson/
+    - assets/images/
