@@ -89,7 +89,11 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _navigate() async {
-    await FirestoreInit.initializeSiagaStatus();
+    // Initialize DB status in background
+    FirestoreInit.initializeSiagaStatus().catchError((e) {
+      debugPrint('Firestore status initialization failed: $e');
+    });
+    
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
 
@@ -104,13 +108,18 @@ class _SplashScreenState extends State<SplashScreen>
     final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
     if (firebaseUser != null) {
       try {
-        final doc = await FirestoreService().getUserData(firebaseUser.uid);
+        // Retrieve user data with a safety timeout of 2 seconds
+        final doc = await FirestoreService()
+            .getUserData(firebaseUser.uid)
+            .timeout(const Duration(seconds: 2));
         if (doc.exists && mounted) {
           final fetchedUser = UserModel.fromFirestore(doc);
           _routeByRole(fetchedUser.role);
           return;
         }
-      } catch (_) {}
+      } catch (e) {
+        debugPrint('Splash screen user data retrieval failed/timed out: $e');
+      }
     }
 
     if (mounted) {

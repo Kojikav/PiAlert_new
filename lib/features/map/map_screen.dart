@@ -40,11 +40,9 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _loadMapData() async {
-    await Future.wait([
-      _loadTitikKumpul(),
-      _getCurrentLocation(),
-    ]);
+    await _loadTitikKumpul();
     setState(() => _isLoading = false);
+    _getCurrentLocation();
   }
 
   Future<void> _loadTitikKumpul() async {

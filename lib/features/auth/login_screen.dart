@@ -57,29 +57,39 @@ class _LoginScreenState extends State<LoginScreen>
     if (!_formKey.currentState!.validate()) return;
 
     final auth = context.read<AuthProvider>();
-    final success = await auth.login(
-      _emailController.text.trim(),
-      _passwordController.text,
-    );
+    try {
+      final success = await auth.login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
 
-    if (!mounted) return;
+      if (!mounted) return;
 
-    if (success) {
-      final user = auth.user;
-      if (user == null) return;
-      if (user.role == 'admin') {
-        Navigator.pushReplacementNamed(context, AppRoutes.adminDashboard);
+      if (success) {
+        final user = auth.user;
+        if (user == null) return;
+        if (user.role == 'admin') {
+          Navigator.pushReplacementNamed(context, AppRoutes.adminDashboard);
+        } else {
+          Navigator.pushReplacementNamed(context, AppRoutes.main);
+        }
       } else {
-        Navigator.pushReplacementNamed(context, AppRoutes.main);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(auth.error ?? AppStrings.errorWrongPassword),
+            backgroundColor: AppColors.error,
+          ),
+        );
+        auth.clearError();
       }
-    } else {
+    } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(auth.error ?? AppStrings.errorWrongPassword),
+          content: Text('Terjadi kesalahan: ${e.toString()}'),
           backgroundColor: AppColors.error,
         ),
       );
-      auth.clearError();
     }
   }
 
